@@ -12,12 +12,11 @@ module.exports = function(app) {
   
     // API POST Requests 
     app.post('/api/notes', function(req, res) {
-      const userNotes = req.body;
   
       fs.readFile('./db/db.json', (err, data) => {
         if (err) throw err;
         dbData = JSON.parse(data);
-        dbData.push(userNotes);
+        dbData.push(req.body);
         let number = 1;
         dbData.forEach((note, index) => {
           note.id = number;
@@ -32,7 +31,7 @@ module.exports = function(app) {
           if (err) throw err;
         });
       });
-      res.send('Thank you for your note!');
+      res.send('Your note has been saved');
     });
   
     // API DELETE Requests
